@@ -2,7 +2,7 @@
 extends EditorPlugin
 class_name TBPlugin
 
-var godot_fgd = load("res://addons/tbloader/src/godot-fgd/toFgd.gd")
+var godot_fgd = preload("res://addons/tbloader/src/godot-fgd/toFgd.gd").new()
 var map_control: Control = null
 var fgd_control: Control = null
 var editing_loader: WeakRef = weakref(null)
@@ -60,7 +60,8 @@ func create_fgd_control() -> Control:
 	return ret
 
 func build_fgd():
-	godot_fgd.build()
+	var loader = editing_loader.get_ref()
+	godot_fgd.build(loader.entity_path.replace("res://", ""))
 
 func build_meshes():
 	var loader = editing_loader.get_ref()
